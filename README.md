@@ -4,10 +4,8 @@ Sticky notes that live in your menu bar. Click the icon, a note appears. Close i
 
 No accounts, no sync, no save button, no settings. It is Apple's Stickies with the annoying parts removed, starting with buttons big enough to actually click.
 
-<!-- DEMO VIDEO GOES HERE.
-     Edit this file on github.com and drag demo.mp4 onto this line. GitHub
-     uploads it and leaves behind a link that renders as a video player.
-     Delete this comment once the link is in. -->
+
+https://github.com/user-attachments/assets/d907a5a2-a8ac-450a-86dd-822140c72dbf
 
 
 Runs on Mac with an M chip only. [Check yours](#will-it-run-on-my-mac)
