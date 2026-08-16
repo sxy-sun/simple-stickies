@@ -4,11 +4,11 @@ Sticky notes that live in your menu bar. Click the icon, a note appears. Close i
 
 No accounts, no sync, no save button, no settings. It is Apple's Stickies with the annoying parts removed, starting with buttons big enough to actually click.
 
-<!-- TODO: replace VIDEO_ID below (it appears twice) with your YouTube video ID.
-     A URL like https://www.youtube.com/watch?v=abc123XYZ means the ID is abc123XYZ.
-     GitHub strips <iframe>, so a thumbnail linking to YouTube is the standard
-     way to do this. -->
-[![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
+<!-- DEMO VIDEO GOES HERE.
+     Edit this file on github.com and drag demo.mp4 onto this line. GitHub
+     uploads it and leaves behind a link that renders as a video player.
+     Delete this comment once the link is in. -->
+
 
 Runs on Mac with an M chip only. [Check yours](#will-it-run-on-my-mac)
 
