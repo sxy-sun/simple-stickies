@@ -3,7 +3,8 @@ import AppKit
 /// Live markdown styling applied directly to the editor's text storage.
 /// Markers stay in the text but fade out, so there is no edit/preview mode.
 enum MD {
-    static let base = NSFont.systemFont(ofSize: 14)
+    static let defaultSize: CGFloat = 14
+    static func font(_ size: CGFloat) -> NSFont { .systemFont(ofSize: size) }
     static let ink = NSColor.black.withAlphaComponent(0.86)
     static let soft = NSColor.black.withAlphaComponent(0.5)
     static let faint = NSColor.black.withAlphaComponent(0.22)
@@ -17,8 +18,8 @@ enum MD {
         return p
     }()
 
-    static var defaults: [NSAttributedString.Key: Any] {
-        [.font: base, .foregroundColor: ink, .paragraphStyle: paragraph]
+    static func defaults(_ size: CGFloat) -> [NSAttributedString.Key: Any] {
+        [.font: font(size), .foregroundColor: ink, .paragraphStyle: paragraph]
     }
 
     private static func rx(_ pattern: String) -> NSRegularExpression {
@@ -35,15 +36,15 @@ enum MD {
     private static let code = rx("`([^`\n]+)`")
     private static let link = rx("\\[([^\\]\n]+)\\]\\(([^)\n]+)\\)")
 
-    static func apply(to ts: NSTextStorage) {
+    static func apply(to ts: NSTextStorage, size: CGFloat = defaultSize) {
         let text = ts.string
         let full = NSRange(location: 0, length: ts.length)
         ts.beginEditing()
-        ts.setAttributes(defaults, range: full)
+        ts.setAttributes(defaults(size), range: full)
 
         heading.enumerateMatches(in: text, range: full) { m, _, _ in
             guard let m else { return }
-            let sizes: [CGFloat] = [22, 18, 16]
+            let sizes: [CGFloat] = [size + 8, size + 4, size + 2]
             let font = NSFont.systemFont(ofSize: sizes[m.range(at: 1).length - 1], weight: .semibold)
             ts.addAttribute(.font, value: font, range: m.range)
             ts.addAttribute(.foregroundColor, value: faint, range: m.range(at: 1))
@@ -88,7 +89,7 @@ enum MD {
         code.enumerateMatches(in: text, range: full) { m, _, _ in
             guard let m else { return }
             let inner = m.range(at: 1)
-            ts.addAttribute(.font, value: NSFont.monospacedSystemFont(ofSize: 13, weight: .regular), range: inner)
+            ts.addAttribute(.font, value: NSFont.monospacedSystemFont(ofSize: size - 1, weight: .regular), range: inner)
             ts.addAttribute(.foregroundColor, value: accent, range: inner)
             ts.addAttribute(.backgroundColor, value: NSColor.black.withAlphaComponent(0.05), range: inner)
             dimMarkers(ts, m.range, inner)
@@ -105,7 +106,7 @@ enum MD {
 
     private static func addTrait(_ trait: NSFontTraitMask, _ ts: NSTextStorage, _ range: NSRange) {
         ts.enumerateAttribute(.font, in: range) { value, sub, _ in
-            let font = (value as? NSFont) ?? base
+            let font = (value as? NSFont) ?? MD.font(defaultSize)
             ts.addAttribute(.font, value: NSFontManager.shared.convert(font, toHaveTrait: trait), range: sub)
         }
     }

@@ -5,7 +5,7 @@ final class NoteTextView: NSTextView {
         super.draw(dirtyRect)
         guard string.isEmpty else { return }
         let attrs: [NSAttributedString.Key: Any] = [
-            .font: MD.base,
+            .font: (typingAttributes[.font] as? NSFont) ?? MD.font(MD.defaultSize),
             .foregroundColor: NSColor.black.withAlphaComponent(0.22),
         ]
         ("Write something…" as NSString).draw(
@@ -20,6 +20,7 @@ final class NoteWindow: NSWindow, NSTextViewDelegate {
     static let defaultSize = NSSize(width: 320, height: 300)
 
     private let textView = NoteTextView()
+    private var fontSize = MD.defaultSize
 
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
@@ -66,7 +67,7 @@ final class NoteWindow: NSWindow, NSTextViewDelegate {
         textView.allowsUndo = true
         textView.drawsBackground = false
         textView.textContainerInset = NSSize(width: 14, height: 10)
-        textView.typingAttributes = MD.defaults
+        textView.typingAttributes = MD.defaults(fontSize)
         textView.insertionPointColor = MD.ink
         textView.autoresizingMask = [.width]
         textView.isVerticallyResizable = true
@@ -102,9 +103,23 @@ final class NoteWindow: NSWindow, NSTextViewDelegate {
     }
 
     func textDidChange(_ notification: Notification) {
+        restyle()
+    }
+
+    /// ⌘+ and ⌘- resize this note's text. Each note keeps its own size.
+    @objc func makeTextBigger(_ sender: Any?) { setFontSize(fontSize + 2) }
+    @objc func makeTextSmaller(_ sender: Any?) { setFontSize(fontSize - 2) }
+
+    private func setFontSize(_ size: CGFloat) {
+        fontSize = min(max(size, 10), 36)
+        restyle()
+    }
+
+    private func restyle() {
         guard let storage = textView.textStorage else { return }
-        MD.apply(to: storage)
-        textView.typingAttributes = MD.defaults
+        MD.apply(to: storage, size: fontSize)
+        textView.typingAttributes = MD.defaults(fontSize)
+        textView.needsDisplay = true
     }
 
     override func cancelOperation(_ sender: Any?) {

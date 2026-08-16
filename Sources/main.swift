@@ -75,6 +75,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         editMenu.addItem(withTitle: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
         editMenu.addItem(withTitle: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v")
         editMenu.addItem(withTitle: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+        editMenu.addItem(.separator())
+        // Two entries for bigger: ⌘+ needs shift on most layouts, but people
+        // press ⌘= just as often. Both land on the same action.
+        let biggerShift = editMenu.addItem(withTitle: "Bigger",
+                                           action: #selector(NoteWindow.makeTextBigger(_:)),
+                                           keyEquivalent: "+")
+        biggerShift.keyEquivalentModifierMask = [.command, .shift]
+        let bigger = editMenu.addItem(withTitle: "Bigger",
+                                      action: #selector(NoteWindow.makeTextBigger(_:)),
+                                      keyEquivalent: "=")
+        bigger.keyEquivalentModifierMask = [.command]
+        editMenu.addItem(withTitle: "Smaller",
+                         action: #selector(NoteWindow.makeTextSmaller(_:)),
+                         keyEquivalent: "-")
         editItem.submenu = editMenu
         main.addItem(editItem)
 

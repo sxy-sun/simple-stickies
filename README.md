@@ -12,6 +12,17 @@ No accounts, no sync, no save button, no settings. It is Apple's Stickies with t
 
 Runs on Mac with an M chip only. [Check yours](#will-it-run-on-my-mac)
 
+## Will it run on my Mac?
+
+Click  in the top left corner, then **About This Mac**, and look at the **Chip** line.
+
+| It says | Result |
+| --- | --- |
+| Apple M1, M2, M3, M4 or M5 (any Pro, Max, Ultra) | ✅ Works |
+| Intel Core i5, i7, i9 | ❌ Won't run |
+
+You also need **macOS 13 Ventura or newer**, released in 2022.
+
 ## Download
 
 ### [⬇ Download Simple Stickies](https://github.com/sxy-sun/simple-stickies/releases/latest)
@@ -41,7 +52,7 @@ This way skips the security warning.
 
 ```bash
 brew tap sxy-sun/simple-stickies https://github.com/sxy-sun/simple-stickies
-brew install --cask simple-stickies
+brew install --cask sxy-sun/simple-stickies/simple-stickies
 ```
 
 **Uninstall**
@@ -56,17 +67,6 @@ brew uninstall --cask simple-stickies
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## Will it run on my Mac?
-
-Click  in the top left corner, then **About This Mac**, and look at the **Chip** line.
-
-| It says | Result |
-| --- | --- |
-| Apple M1, M2, M3, M4 or M5 (any Pro, Max, Ultra) | ✅ Works |
-| Intel Core i5, i7, i9 | ❌ Won't run |
-
-You also need **macOS 13 Ventura or newer**, released in 2022.
-
 ## How to use it
 
 > **Nothing appears in the Dock.** This app lives in the menu bar at the *top* of your screen. Look for the 📝 icon near the clock.
@@ -78,6 +78,21 @@ You also need **macOS 13 Ventura or newer**, released in 2022.
 | Resize | Drag the grip in the bottom right corner, or any edge |
 | Close and delete | Click the big **×** |
 | Quit | Right click the 📝 icon, then **Quit** |
+
+## Text size
+
+Click a note so it is the active window, then:
+
+| Keys | What happens |
+| --- | --- |
+| **⌘ =** or **⌘ +** | Text gets bigger |
+| **⌘ −** | Text gets smaller |
+
+Headings and code grow along with the body text, so everything stays in proportion. Each note keeps its own size, so one can be large while another stays small.
+
+These keys only work while a note is the active window. If nothing happens, click on the note first. Size goes back to normal on every new note, because nothing is saved.
+
+## More about notes
 
 **Nothing is ever saved.** Text exists only while the note is on screen. Closing a note or quitting the app throws the text away on purpose. This is for things you don't want to keep, so copy anything you need somewhere else first.
 
