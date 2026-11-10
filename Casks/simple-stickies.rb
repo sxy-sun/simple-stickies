@@ -1,6 +1,6 @@
 cask "simple-stickies" do
-  version "1.0.1"
-  sha256 "9bfca08c0ce4cd467bd28c20034b26b1c69ead583f3f04c0858f5c2cb53c061e"
+  version "1.1.0"
+  sha256 "e12dbbafa09d6bbe6cdff9fe0896fa631773cd035b20ceebbdb12f8399b1e602"
 
   url "https://github.com/sxy-sun/simple-stickies/releases/download/v#{version}/SimpleStickies.zip"
   name "Simple Stickies"
