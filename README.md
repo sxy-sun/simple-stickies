@@ -1,117 +1,57 @@
 # Simple Stickies
 
-Sticky notes that live in your menu bar. Click the icon, a note appears. Close it, the note is gone.
+Simple sticky notes for your Mac. Click the note icon in the menu bar to write something down. Notes stay above your other windows.
 
-No accounts, no sync, no save button, no settings. It is Apple's Stickies with the annoying parts removed, starting with buttons big enough to actually click.
+Minimize a note to keep it in the menu bar. Close it to delete it forever. Notes are kept in memory only. Quitting the app deletes all notes, including minimized ones.
 
+Requires an Apple silicon Mac and macOS 13 or newer.
 
-https://github.com/user-attachments/assets/d907a5a2-a8ac-450a-86dd-822140c72dbf
+## Install
 
+Download **SimpleStickies.zip** from the [latest release](https://github.com/sxy-sun/simple-stickies/releases/latest), unzip it, and drag **Simple Stickies** into **Applications**.
 
-Runs on Mac with an M chip only. [Check yours](#will-it-run-on-my-mac)
+If macOS blocks the app, open **System Settings → Privacy & Security** and choose **Open Anyway**.
 
-## Will it run on my Mac?
-
-Click  in the top left corner, then **About This Mac**, and look at the **Chip** line.
-
-| It says | Result |
-| --- | --- |
-| Apple M1, M2, M3, M4 or M5 (any Pro, Max, Ultra) | ✅ Works |
-| Intel Core i5, i7, i9 | ❌ Won't run |
-
-You also need **macOS 13 Ventura or newer**, released in 2022.
-
-## Download
-
-### [⬇ Download Simple Stickies](https://github.com/sxy-sun/simple-stickies/releases/latest)
-
-1. Click the link above and download **SimpleStickies.zip**.
-2. Double click the downloaded file to unzip it.
-3. Drag **Simple Stickies** into your **Applications** folder.
-4. Open it. The first time only, macOS shows a warning. Clear it with the steps below.
-
-**The first time you open it**
-
-macOS blocks apps that are not signed with a paid Apple certificate. Simple Stickies is free and unsigned, so this warning appears once and never again.
-
-1. Double click **Simple Stickies**. A warning appears. Click **Done**.
-2. Open  → **System Settings** → **Privacy & Security**.
-3. Scroll down until you see *"Simple Stickies was blocked to protect your Mac."*
-4. Click **Open Anyway**. Enter your Mac password if asked.
-5. Open the app again. It works from now on.
-
-**Uninstall**
-
-Drag **Simple Stickies** from your Applications folder to the Trash. It leaves nothing behind.
-
-## Install with Homebrew
-
-This way skips the security warning.
+Or install with Homebrew:
 
 ```bash
 brew tap sxy-sun/simple-stickies https://github.com/sxy-sun/simple-stickies
 brew install --cask sxy-sun/simple-stickies/simple-stickies
 ```
 
-**Uninstall**
+## Use
 
-```bash
-brew uninstall --cask simple-stickies
-```
-
-**No Homebrew?** Run this first, then the two commands above.
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-## How to use it
-
-> **Nothing appears in the Dock.** This app lives in the menu bar at the *top* of your screen. Look for the 📝 icon near the clock.
+The app lives in the menu bar at the top of your screen. It has no Dock icon.
 
 | Action | How |
 | --- | --- |
-| New note | Click the 📝 icon in the menu bar |
-| Move a note | Drag the blank strip along its top edge |
-| Resize | Drag the grip in the bottom right corner, or any edge |
-| Close and delete | Click the big **×** |
-| Quit | Right click the 📝 icon, then **Quit** |
+| Create a note | Click the note icon, or press **⌘N** while a note is active |
+| Minimize a note | Click **−** on the note, or press **⌘M** |
+| Restore a note | Click its colored dot in the menu bar |
+| Delete a note forever | Click **×**, or press **⌘W** or **Esc** |
+| Move a note | Drag the blank space along its top edge |
+| Resize a note | Drag an edge or the bottom-right grip |
+| Make text bigger | Press **⌘=** or **⌘+** |
+| Make text smaller | Press **⌘−** |
+| Quit | Right-click the note icon and choose **Quit Simple Stickies** |
 
-## Text size
+Each note has its own color. Its dot appears when you first minimize it and stays in the menu bar when you open it again. Deleting the note removes its dot and makes that color available for a new note. Click inside a note before using keyboard shortcuts.
 
-Click a note so it is the active window, then:
+Type Markdown for headings, bold, italic, code, strikethrough, lists, and quotes. Text styles update as you type.
 
-| Keys | What happens |
-| --- | --- |
-| **⌘ =** or **⌘ +** | Text gets bigger |
-| **⌘ −** | Text gets smaller |
+## Build and run
 
-Headings and code grow along with the body text, so everything stays in proportion. Each note keeps its own size, so one can be large while another stays small.
+Install Xcode Command Line Tools, then run these commands from the project folder:
 
-These keys only work while a note is the active window. If nothing happens, click on the note first. Size goes back to normal on every new note, because nothing is saved.
+```bash
+./build.sh
+open -n "build/Simple Stickies.app"
+```
 
-## More about notes
+To install a local build, quit Simple Stickies first. Copy **build/Simple Stickies.app** into **Applications**, replace the old copy, and open it.
 
-**Nothing is ever saved.** Text exists only while the note is on screen. Closing a note or quitting the app throws the text away on purpose. This is for things you don't want to keep, so copy anything you need somewhere else first.
-
-To start it automatically when your Mac turns on: **System Settings → General → Login Items → +** and pick Simple Stickies.
-
-## Formatting
-
-Type Markdown and it styles itself as you go. There is no preview button to press.
-
-| Type this | Get |
-| --- | --- |
-| `# Big heading` | Large bold text |
-| `## Smaller heading` | Medium bold text |
-| `**bold**` | **bold** |
-| `*italic*` | *italic* |
-| `` `code` `` | `code` |
-| `~~strikethrough~~` | ~~strikethrough~~ |
-| `- item` | Bulleted list |
-| `1. item` | Numbered list |
-| `> quote` | Indented grey quote |
+To uninstall, quit the app and move it from **Applications** to the Trash. For a Homebrew install, run `brew uninstall --cask simple-stickies`.
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+[MIT](LICENSE).

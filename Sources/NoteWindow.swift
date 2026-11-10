@@ -18,6 +18,8 @@ final class NoteTextView: NSTextView {
 /// memory: closing the window throws it away.
 final class NoteWindow: NSWindow, NSTextViewDelegate {
     static let defaultSize = NSSize(width: 320, height: 300)
+    let colorIndex: Int
+    var onMinimize: ((NoteWindow) -> Void)?
 
     private let textView = NoteTextView()
     private var fontSize = MD.defaultSize
@@ -25,9 +27,10 @@ final class NoteWindow: NSWindow, NSTextViewDelegate {
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
 
-    init(at topLeft: NSPoint) {
+    init(at topLeft: NSPoint, colorIndex: Int) {
+        self.colorIndex = colorIndex
         super.init(contentRect: NSRect(origin: .zero, size: Self.defaultSize),
-                   styleMask: [.borderless, .resizable],
+                   styleMask: [.borderless, .resizable, .miniaturizable],
                    backing: .buffered, defer: false)
 
         appearance = NSAppearance(named: .aqua)
@@ -81,9 +84,13 @@ final class NoteWindow: NSWindow, NSTextViewDelegate {
         scroll.documentView = textView
         root.addSubview(scroll)
 
-        let close = CloseButton()
+        let close = NoteControlButton()
         close.onClick = { [weak self] in self?.close() }
         root.addSubview(close)
+
+        let minimize = NoteControlButton(kind: .minimize)
+        minimize.onClick = { [weak self] in self?.performMiniaturize(nil) }
+        root.addSubview(minimize)
 
         let grip = ResizeGrip()
         root.addSubview(grip)
@@ -92,8 +99,11 @@ final class NoteWindow: NSWindow, NSTextViewDelegate {
         let header: CGFloat = 36
         scroll.frame = NSRect(x: 0, y: 0, width: root.bounds.width, height: root.bounds.height - header)
         close.frame = NSRect(x: 12, y: root.bounds.height - header + 6,
-                             width: CloseButton.size, height: CloseButton.size)
+                             width: NoteControlButton.size, height: NoteControlButton.size)
         close.autoresizingMask = [.minYMargin]
+        minimize.frame = NSRect(x: close.frame.maxX + 6, y: close.frame.minY,
+                                width: NoteControlButton.size, height: NoteControlButton.size)
+        minimize.autoresizingMask = [.minYMargin]
         grip.frame = NSRect(x: root.bounds.width - ResizeGrip.size, y: 0,
                             width: ResizeGrip.size, height: ResizeGrip.size)
         grip.autoresizingMask = [.minXMargin, .maxYMargin]
@@ -105,6 +115,10 @@ final class NoteWindow: NSWindow, NSTextViewDelegate {
     func textDidChange(_ notification: Notification) {
         restyle()
     }
+
+    // Keep the window and its text in memory; the app supplies a menu bar item.
+    override func performMiniaturize(_ sender: Any?) { onMinimize?(self) }
+    override func miniaturize(_ sender: Any?) { onMinimize?(self) }
 
     /// ⌘+ and ⌘- resize this note's text. Each note keeps its own size.
     @objc func makeTextBigger(_ sender: Any?) { setFontSize(fontSize + 2) }
